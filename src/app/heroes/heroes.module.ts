@@ -10,6 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material/material.module';
 import { HeroeCardComponent } from './components/heroe-card/heroe-card.component';
 import { RestructureImagePipe } from './pipes/restructure-image.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,10 @@ import { RestructureImagePipe } from './pipes/restructure-image.pipe';
   imports: [
     CommonModule,
     HeroesRoutingModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     MaterialModule,
+    FormsModule,
   ],
 })
 export class HeroesModule {}

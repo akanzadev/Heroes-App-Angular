@@ -1,1 +1,40 @@
-<p>search works!</p>
+<h1>Hero Seeker</h1>
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Heroes</mat-label>
+    <input
+      type="text"
+      placeholder="SuperHeroe"
+      matInput
+      aria-label="Heroe"
+      [matAutocomplete]="auto"
+      [formControl]="stateCtrl"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let heroe of filteredStates | async"
+        [value]="heroe.superhero"
+        (click)="onSelect(heroe)"
+      >
+        <img
+          height="25"
+          aria-hidden
+          [src]="heroe | restructureImage"
+          class="example-option-img"
+        />
+        <span>{{ heroe.superhero }}</span> |
+        <small>{{ heroe.publisher }}</small>
+      </mat-option>
+      <mat-option
+        value=""
+        (click)="onSelect(undefined)"
+        *ngIf="(filteredStates | async)?.length == 0"
+      >
+        <span>No hay heroes</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+<div fxLayout="row" *ngIf="heroeSelected">
+  <app-heroe-card [heroe]="heroeSelected"></app-heroe-card>
+</div>

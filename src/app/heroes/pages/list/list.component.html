@@ -11,10 +11,11 @@
   *ngIf="heroes$ | async as heroes; else loadHeroes"
 >
   <div
+    fxFlex.xs="100"
     fxFlex.md="30"
     fxFlex.lg="15"
     fxFlex.sm="40"
-    fxFlex="100"
+    fxFlex="15"
     *ngFor="let heroe of heroes"
   >
     <app-heroe-card [heroe]="heroe"></app-heroe-card>

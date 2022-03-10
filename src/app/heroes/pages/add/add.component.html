@@ -1,1 +1,88 @@
-<p>add works!</p>
+<div fxLayout="row" fxLayoutGap="40px" fxLayout.xs="column">
+  <form
+    fxFlex="50"
+    (ngSubmit)="onSubmit()"
+    fxLayout="column"
+    [formGroup]="heroeForm"
+  >
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+      <mat-form-field fxFlex="100" fxLayout.xs="column">
+        <mat-label>Super Heroe</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="superhero"
+          name="superhero"
+        />
+        <mat-error *ngIf="validateRequired('superhero')">
+          Super Heroe is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="validateMinLength('superhero')">
+          Must contain at least 3 characters
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100">
+        <mat-label>Alter Ego</mat-label>
+        <input
+          matInput
+          type="text"
+          name="alter_ego"
+          formControlName="alter_ego"
+        />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Primera Aparición</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="first_appearance"
+        name="first_appearance"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Personajes</mat-label>
+      <input
+        matInput
+        type="text"
+        name="characters"
+        formControlName="characters"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Creador</mat-label>
+      <mat-select formControlName="publisher" name="publisher">
+        <mat-option *ngFor="let publisher of publishers" [value]="publisher.id">
+          {{ publisher.desc }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Foto Url</mat-label>
+      <input matInput type="url" name="alt_img" formControlName="alt_img" />
+    </mat-form-field>
+
+    <br />
+
+    <div fxLayout>
+      <button
+        style="width: 100%"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        <mat-icon>edit</mat-icon>
+        {{ heroe.id ? "Actualizar" : "Crear" }}
+      </button>
+      <span class="spacer"></span>
+    </div>
+  </form>
+
+  <div fxFlex="50">
+    <img [src]="heroe | restructureImage" />
+  </div>
+</div>
