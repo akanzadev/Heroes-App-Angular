@@ -1,3 +1,9 @@
+<h1>
+  {{ heroe.id ? "Editar" : "Nuevo" }}
+  Héroe
+  <small>{{ heroe.superhero }}</small>
+</h1>
+
 <div fxLayout="row" fxLayoutGap="40px" fxLayout.xs="column">
   <form
     fxFlex="50"
@@ -71,7 +77,7 @@
     <div fxLayout>
       <button mat-raised-button color="primary" type="submit">
         <mat-icon>edit</mat-icon>
-        {{ heroe.id ? "Actualizar" : "Crear" }}
+        {{ heroe.id ? "Actualizar" : "Crear" }} Héroe
       </button>
       <span class="spacer"></span
       ><button

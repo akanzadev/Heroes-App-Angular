@@ -10,7 +10,6 @@ export class RestructureImagePipe implements PipeTransform {
     return null;
   }  */
   transform(heroe: Heroe): string {
-    console.log(heroe);
     if (!heroe.id && !heroe.alt_img) {
       return 'assets/no-image.png';
     } else if (heroe.alt_img) {

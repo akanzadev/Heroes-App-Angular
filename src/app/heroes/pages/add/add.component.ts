@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Heroe } from '../../interfaces/heroe';
 import { HeroesService } from '../../services/heroes.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, throwError } from 'rxjs';
+import { of, switchMap, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../../components/confirm/confirm.component';
 
 @Component({
   selector: 'app-add',
@@ -37,7 +39,8 @@ export class AddComponent implements OnInit {
     private heroesService: HeroesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {
     this.buildForm();
   }
@@ -110,11 +113,27 @@ export class AddComponent implements OnInit {
   }
 
   deleteHero() {
-    this.heroesService.delete(this.heroe.id).subscribe({
-      next: (heroe) => {
-        this.router.navigate(['heroes']);
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '250px',
+      data: {
+        title: 'Delete heroe',
+        message: 'Are you sure you want to delete this heroe?',
+        heroe: { ...this.heroe },
       },
     });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((result) => {
+          if (!result) return of(null);
+          return this.heroesService.delete(this.heroe.id);
+        })
+      )
+      .subscribe({
+        next: (heroe) => {
+          if (heroe) this.router.navigate(['heroes']);
+        },
+      });
   }
 
   validateRequired(name: string) {

@@ -11,6 +11,7 @@ import { MaterialModule } from '../material/material.module';
 import { HeroeCardComponent } from './components/heroe-card/heroe-card.component';
 import { RestructureImagePipe } from './pipes/restructure-image.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ListComponent,
     HeroeCardComponent,
     RestructureImagePipe,
+    ConfirmComponent,
   ],
   imports: [
     CommonModule,

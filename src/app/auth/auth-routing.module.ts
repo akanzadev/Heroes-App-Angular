@@ -6,7 +6,21 @@ import { RegisterComponent } from './pages/register/register.component';
 const routes: Route[] = [
   {
     path: '',
-    children: [
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
+    /* children: [
       {
         path: 'login',
         component: LoginComponent,
@@ -19,7 +33,7 @@ const routes: Route[] = [
         path: '**',
         redirectTo: 'login',
       },
-    ],
+    ], */
   },
 ];
 
