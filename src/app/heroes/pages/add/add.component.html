@@ -69,16 +69,21 @@
     <br />
 
     <div fxLayout>
-      <button
-        style="width: 100%"
-        mat-raised-button
-        color="primary"
-        type="submit"
-      >
+      <button mat-raised-button color="primary" type="submit">
         <mat-icon>edit</mat-icon>
         {{ heroe.id ? "Actualizar" : "Crear" }}
       </button>
-      <span class="spacer"></span>
+      <span class="spacer"></span
+      ><button
+        *ngIf="heroe.id"
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="deleteHero()"
+      >
+        <mat-icon>edit</mat-icon>
+        Borrar
+      </button>
     </div>
   </form>
 

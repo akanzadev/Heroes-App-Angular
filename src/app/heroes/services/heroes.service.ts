@@ -54,4 +54,15 @@ export class HeroesService {
       })
     );
   }
+
+  delete(id: string): Observable<{}> {
+    return this.http.delete<{}>(`${this.BASE_URL}/${id}`).pipe(
+      catchError((err) => {
+        if (err.status === HttpStatusCode.NotFound) {
+          return throwError(() => new Error("Can't find heroe"));
+        }
+        return throwError(() => new Error('Error server'));
+      })
+    );
+  }
 }

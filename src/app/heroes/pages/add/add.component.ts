@@ -4,11 +4,19 @@ import { Heroe } from '../../interfaces/heroe';
 import { HeroesService } from '../../services/heroes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styles: [],
+  styles: [
+    `
+      img {
+        width: 100%;
+        border-radius: 5px;
+      }
+    `,
+  ],
 })
 export class AddComponent implements OnInit {
   heroeForm!: FormGroup;
@@ -28,12 +36,20 @@ export class AddComponent implements OnInit {
     private formBuilder: FormBuilder,
     private heroesService: HeroesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.buildForm();
   }
 
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
   ngOnInit(): void {
+    if (!this.router.url.includes('edit')) return;
     this.activatedRoute.paramMap
       .pipe(
         switchMap((params) => {
@@ -58,7 +74,10 @@ export class AddComponent implements OnInit {
       first_appearance: ['', [Validators.required]],
       characters: ['', [Validators.required]],
       publisher: ['', [Validators.required]],
-      alt_img: ['', [Validators.pattern('^(http(s?):).*')]],
+      alt_img: [
+        '',
+        [Validators.required, Validators.pattern('^(http(s?):).*')],
+      ],
     });
   }
   onSubmit() {
@@ -73,6 +92,7 @@ export class AddComponent implements OnInit {
     this.heroesService.create(this.heroeForm.value).subscribe({
       next: (heroe) => {
         this.router.navigate(['heroes/edit', heroe.id]);
+        this.openSnackBar('Heroe created', 'OK');
       },
     });
   }
@@ -82,9 +102,19 @@ export class AddComponent implements OnInit {
       .update({ ...this.heroeForm.value, id: this.heroe.id })
       .subscribe({
         next: (heroe) => {
+          this.heroe = heroe;
+          this.openSnackBar('Heroe updated', 'OK');
           console.log(heroe);
         },
       });
+  }
+
+  deleteHero() {
+    this.heroesService.delete(this.heroe.id).subscribe({
+      next: (heroe) => {
+        this.router.navigate(['heroes']);
+      },
+    });
   }
 
   validateRequired(name: string) {
