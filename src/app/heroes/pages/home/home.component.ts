@@ -16,12 +16,10 @@ import { Auth } from 'src/app/auth/interface/auth.interface';
   ],
 })
 export class HomeComponent implements OnInit {
-  user$!: Observable<Auth | null>;
+  user$ = this.authService.user$;
   constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.user$ = this.authService.user$;
-  }
+  ngOnInit(): void {}
 
   logout() {
     this.authService.logout();
